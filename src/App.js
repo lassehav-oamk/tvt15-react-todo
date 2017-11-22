@@ -3,6 +3,7 @@ import TodoItem from './components/TodoItem';
 import TodoListHeader from './components/TodoListHeader';
 import Menu from './components/Menu';
 import NewItemInputs from './components/NewItemInputs';
+import itemData from './data/todoData';
 
 
 class App extends Component {
@@ -13,35 +14,47 @@ class App extends Component {
 
     this.state = {
       showNewItemInputs: false,
-      items: [
-        {
-          description: "Buy chocko",
-          dueDate: "22.11.2017",
-          type: "shop",
-          id: 1
-        },
-        {
-          description: "Learn React",
-          dueDate: "1.11.2017",
-          type: "learn",
-          id: 2
-        },
-        {
-          description: "Read book",
-          dueDate: "2.12.2017",
-          type: "read",
-          id: 3
-        }
-      ]
+      items: []
     };
 
     this.toggleNewItemInputs = this.toggleNewItemInputs.bind(this);
+    this.addNewItem = this.addNewItem.bind(this);
+    this.toggleIsDone = this.toggleIsDone.bind(this);
+  }
+
+  componentDidMount() {
+    itemData.getItems().then(result => {
+      this.setState({ items: result});
+    });
   }
 
   toggleNewItemInputs()
-  {
-    console.log("tuut");    
+  { 
     this.setState({ showNewItemInputs: !this.state.showNewItemInputs });
+  }
+
+  addNewItem(description, dueDate, type)
+  {
+    this.setState({ items: [ 
+                        ...this.state.items, 
+                        {
+                          description,
+                          dueDate,
+                          type,
+                          id: this.state.items.length + 1
+                        }
+                    ]});
+    this.toggleNewItemInputs();
+  }
+
+  toggleIsDone(itemId)
+  {    
+    let matchIndex = this.state.items.findIndex(element => element.id === itemId);
+    console.log(matchIndex);
+    this.state.items[matchIndex].isDone = !this.state.items[matchIndex].isDone;
+    this.setState({
+      items: [...this.state.items]
+    });
   }
 
   render() {    
@@ -51,12 +64,16 @@ class App extends Component {
         <Menu />
         <TodoListHeader />
         <NewItemInputs showInputs={ this.state.showNewItemInputs }
-                       toggleInputs={ this.toggleNewItemInputs }/>
+                       toggleInputs={ this.toggleNewItemInputs }
+                       addNewItem={ this.addNewItem }/>
         {
           this.state.items.map(element => <TodoItem description={element.description}
-                                        dueDate={element.dueDate} 
-                                        type={element.type}
-                                        key={element.id} />)
+                                                    dueDate={element.dueDate} 
+                                                    type={element.type}
+                                                    isDone={element.isDone}
+                                                    id={element.id}
+                                                    key={element.id}
+                                                    toggleIsDone={this.toggleIsDone} />)
         }
       </div>
     );

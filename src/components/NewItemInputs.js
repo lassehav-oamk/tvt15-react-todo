@@ -14,12 +14,25 @@ class NewItemInputs extends Component {
         }
 
         this.inputTodoChange = this.inputTodoChange.bind(this);
+        this.addNewItem = this.addNewItem.bind(this);
     }
 
     inputTodoChange(event)
     {
         console.log(event.target.value);
         this.setState({ [event.target.name]: event.target.value });
+    }
+
+    addNewItem()
+    {
+        this.props.addNewItem(this.state.inputTodoValue,
+                            this.state.inputDueDateValue,
+                            this.state.inputTypeValue);
+        this.setState({
+            inputTodoValue: "",
+            inputDueDateValue: "",
+            inputTypeValue: ""
+        });    
     }
     
 
@@ -53,7 +66,8 @@ class NewItemInputs extends Component {
                             name="inputTypeValue"
                             value={ this.state.inputTypeValue }
                             onChange={ this.inputTodoChange } />
-                        <button className="btn btn-success">Save</button>
+                        <button className="btn btn-success"
+                                onClick={ this.addNewItem }>Save</button>
                         <button className="btn btn-default"
                                 onClick={ this.props.toggleInputs }>Cancel</button>
                     </div>
