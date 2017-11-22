@@ -6,35 +6,54 @@ import NewItemInputs from './components/NewItemInputs';
 
 
 class App extends Component {
-  render() {
-    const data = [
-      {
-        description: "Buy chocko",
-        dueDate: "22.11.2017",
-        type: "shop",
-        id: 1
-      },
-      {
-        description: "Learn React",
-        dueDate: "1.11.2017",
-        type: "learn",
-        id: 2
-      },
-      {
-        description: "Read book",
-        dueDate: "2.12.2017",
-        type: "read",
-        id: 3
-      }
-    ];
+
+  constructor(props)
+  {
+    super(props);
+
+    this.state = {
+      showNewItemInputs: false,
+      items: [
+        {
+          description: "Buy chocko",
+          dueDate: "22.11.2017",
+          type: "shop",
+          id: 1
+        },
+        {
+          description: "Learn React",
+          dueDate: "1.11.2017",
+          type: "learn",
+          id: 2
+        },
+        {
+          description: "Read book",
+          dueDate: "2.12.2017",
+          type: "read",
+          id: 3
+        }
+      ]
+    };
+
+    this.toggleNewItemInputs = this.toggleNewItemInputs.bind(this);
+  }
+
+  toggleNewItemInputs()
+  {
+    console.log("tuut");    
+    this.setState({ showNewItemInputs: !this.state.showNewItemInputs });
+  }
+
+  render() {    
 
     return (
       <div className="container">
         <Menu />
         <TodoListHeader />
-        <NewItemInputs showInputs={ false }/>
+        <NewItemInputs showInputs={ this.state.showNewItemInputs }
+                       toggleInputs={ this.toggleNewItemInputs }/>
         {
-          data.map(element => <TodoItem description={element.description}
+          this.state.items.map(element => <TodoItem description={element.description}
                                         dueDate={element.dueDate} 
                                         type={element.type}
                                         key={element.id} />)
