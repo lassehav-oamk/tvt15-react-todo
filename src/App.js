@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import TodoItem from './components/TodoItem';
-import TodoListHeader from './components/TodoListHeader';
 import Menu from './components/Menu';
-import NewItemInputs from './components/NewItemInputs';
 import itemData from './data/todoData';
-
+import TodoList from './components/TodoList';
 
 class App extends Component {
 
@@ -13,13 +10,14 @@ class App extends Component {
     super(props);
 
     this.state = {
+      view: "todos",
       showNewItemInputs: false,
       items: []
     };
 
     this.toggleNewItemInputs = this.toggleNewItemInputs.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
-    this.toggleIsDone = this.toggleIsDone.bind(this);
+    //this.toggleIsDone = this.toggleIsDone.bind(this);
   }
 
   componentDidMount() {
@@ -44,34 +42,24 @@ class App extends Component {
     this.toggleNewItemInputs();
   }
 
-  toggleIsDone(itemId)
+  /*toggleIsDone(itemId)
   {    
     let matchIndex = this.state.items.findIndex(element => element.id === itemId);
     console.log(matchIndex);
-    this.state.items[matchIndex].isDone = !this.state.items[matchIndex].isDone;
+    //this.state.items[matchIndex].isDone = !this.state.items[matchIndex].isDone;
     this.setState({
       items: [...this.state.items]
     });
-  }
+  }*/
 
   render() {    
-
     return (
       <div className="container">
         <Menu />
-        <TodoListHeader />
-        <NewItemInputs showInputs={ this.state.showNewItemInputs }
-                       toggleInputs={ this.toggleNewItemInputs }
-                       addNewItem={ this.addNewItem }/>
-        {
-          this.state.items.map(element => <TodoItem description={element.description}
-                                                    dueDate={element.dueDate} 
-                                                    type={element.type}
-                                                    isDone={element.isDone}
-                                                    id={element.id}
-                                                    key={element.id}
-                                                    toggleIsDone={this.toggleIsDone} />)
-        }
+        <TodoList items={ this.state.items }
+                  showNewItemInputs={ this.state.showNewItemInputs }
+                  toggleNewItemInputs={ this.toggleNewItemInputs }
+                  addNewItem={ this.addNewItem }/>
       </div>
     );
   }
