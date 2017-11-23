@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Menu from './components/Menu';
 import itemData from './data/todoData';
 import TodoList from './components/TodoList';
+import Graphs from './components/Graphs';
 
 class App extends Component {
 
@@ -56,6 +57,7 @@ class App extends Component {
     return (
       <div className="container">
         <Menu />
+        <Graphs items={ this.state.items }/>
         <TodoList items={ this.state.items }
                   showNewItemInputs={ this.state.showNewItemInputs }
                   toggleNewItemInputs={ this.toggleNewItemInputs }
