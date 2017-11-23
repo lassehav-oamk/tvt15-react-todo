@@ -56,7 +56,7 @@ class NewItemInputs extends Component {
                                 onChange={ this.inputTodoChange }/>
                     </div>
                     <div className="col-md-4">
-                        <input type="text" 
+                        <input type="date" 
                                 name="inputDueDateValue" 
                                 value={this.state.inputDueDateValue}
                                 onChange={ this.inputTodoChange } />

@@ -35,15 +35,12 @@ class App extends Component {
 
   addNewItem(description, dueDate, type)
   {
-    this.setState({ items: [ 
-                        ...this.state.items, 
-                        {
-                          description,
-                          dueDate,
-                          type,
-                          id: this.state.items.length + 1
-                        }
-                    ]});
+    itemData.addNewItem(description, dueDate, type).then(results => {
+      itemData.getItems().then(items => {
+        this.setState({ items });
+      })
+    });
+    
     this.toggleNewItemInputs();
   }
 

@@ -10,7 +10,7 @@ class TodoItem extends Component {
             <div className={ isDone ? "row itemIsDone" : "row" }
                  onClick={ () => {this.props.toggleIsDone(id)} }>
                 <div className="col-md-4">{ description }</div>
-                <div className="col-md-4">{ dueDate }</div>
+                <div className="col-md-4">{ dueDate.format('DD.MM.YYYY') }</div>
                 <div className="col-md-4">{ type }</div>
             </div>
         )
